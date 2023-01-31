@@ -1,0 +1,11 @@
+minecraft/world
+shitsuji-bot/env
+shitsuji-bot/venv
+shitsuji-bot/creds.json
+minecraft/world
+minecraft/usercache.json
+minecraft/crash-reports
+minecraft/libraries
+minecraft/logs
+minecraft/scripts
+minecraft/versions
