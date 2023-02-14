@@ -1,12 +1,14 @@
 import os
 
-INSTALLED_APPS = ['GSHEET', 'RECIPE']
+INSTALLED_APPS = ['GSHEET', 'RECIPE', 'TORRENT']
 """ Sheet Settings """
 columns = {
   'desc': 'A',
   'amount': 'C',
   'date': 'D',
   'category': 'B',
+  'tip_ammount': 'P',
+  'tip_date': 'Q',
 
   # cell
   'total': 'H17'
@@ -17,6 +19,7 @@ CAT = {
   'ser': 'Servicios',
   'cas': 'Casa',
   'afu': 'Afuera',
+  'sus': 'Sustancia',
   'gus': 'Gustos'
 }
 """ Telegram """
@@ -33,3 +36,5 @@ RECIPE_URL = os.environ.get('RECIPE_URL')
 RECIPE_APP_ID = os.environ.get('RECIPE_APP_ID')
 RECIPE_APP_KEY = os.environ.get('RECIPE_APP_KEY')
 CREDS_JSON = 'creds.json'
+"""Torrent Downloader"""
+TORRENT_PATH="/code/Films"

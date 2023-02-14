@@ -2,7 +2,7 @@ from telegram.ext import Updater, CommandHandler
 from functions.basics import error
 from functions import basics
 from settings import INSTALLED_APPS, TOKEN
-from functions.third_apps.torrent_downloader import Torrent_Downloader
+from functions.torrent_downloader import Torrent_Downloader
 
 
 def main():
@@ -12,14 +12,15 @@ def main():
 
     dispatcher.add_handler(CommandHandler("start", basics.start))
     dispatcher.add_handler(CommandHandler("help", basics.help))
-    
-    torrent = Torrent_Downloader()
-    dispatcher.add_handler(CommandHandler("torrent", torrent.upload_torrent))
+    if 'TORRENT' in INSTALLED_APPS:
+        torrent = Torrent_Downloader()
+        dispatcher.add_handler(CommandHandler("torrent", torrent.upload_torrent))
 
     if 'GSHEET' in INSTALLED_APPS:
         from functions.third_apps import google_sheet_API
         sheetAPI = google_sheet_API.Gsheet_Helper()
         dispatcher.add_handler(CommandHandler("spend", sheetAPI.spend))
+        dispatcher.add_handler(CommandHandler("tip", sheetAPI.add_tip))
         dispatcher.add_handler(CommandHandler("total", sheetAPI.total))
         dispatcher.add_handler(CommandHandler("rm", sheetAPI.rm_last))
 

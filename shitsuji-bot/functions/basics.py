@@ -14,7 +14,7 @@ def start(update, context):
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text("/spend <desc> <amount> <category> updates google sheet \n/total returns total \n/rm removes last spend\n/recipe <food> returns random recipe")
+    update.message.reply_text("/spend <desc> <amount> <category> updates google sheet \n/total returns total \n/rm removes last spend\n/recipe <food> returns random recipe\n/tip <tip> add a new tip\n/torrent <magnet> donwload and add new film to Plex")
                              
                              
 

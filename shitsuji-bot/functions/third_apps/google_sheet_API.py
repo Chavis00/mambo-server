@@ -33,9 +33,8 @@ class Gsheet_Helper:
   def remove_desc(self):
     self.desc = ""
 
-  def update_last_filled_row(self):
-    self.last_filled_row = len(list(filter(None,
-                                           self.worksheet.col_values(1))))
+  def update_last_filled_row(self, col):
+    self.last_filled_row = len(list(filter(None,self.worksheet.col_values(col))))
 
   def get_items(self):
     items = self.get_sheet(SHEET_NAME)
@@ -103,7 +102,7 @@ class Gsheet_Helper:
     self.get_data(context)
     update.message.reply_text(f"Updating Sheet..")
     try:
-      self.update_last_filled_row()
+      self.update_last_filled_row(1)
       self.update_sheet()
     except:
       update.message.reply_text("Sorry I can't update sheet :c")
@@ -123,7 +122,7 @@ class Gsheet_Helper:
   def rm_last(self, update, context):
     update.message.reply_text(f"Removing...")
 
-    self.update_last_filled_row()
+    self.update_last_filled_row(1)
     self.worksheet.update(f"{columns['desc']}{self.last_filled_row + 1}", '')
     self.worksheet.update(f"{columns['amount']}{self.last_filled_row + 1}",
                           '')
@@ -133,3 +132,45 @@ class Gsheet_Helper:
     update.message.reply_text(f"Removed!")
 
     return
+
+
+  
+  def store_tip(self, tip):
+    
+    # example update('A1', value)
+
+    self.worksheet.update(f"{columns['tip_ammount']}{self.last_filled_row+1}",
+                          tip)
+    self.worksheet.update(f"{columns['tip_date']}{self.last_filled_row+1}", datetime.now().strftime('%Y-%m-%d'))
+    # FORMAT
+    self.worksheet.format(
+      f"{columns['tip_ammount']}",
+      {'numberFormat': {
+        'type': 'CURRENCY',
+        'pattern': '$ #,###.00'
+      }})
+    self.worksheet.format(f"{columns['tip_date']}",
+                          {'numberFormat': {
+                            "type": "DATE_TIME"
+                          }})
+
+
+
+  def add_tip(self, update, context):
+    update.message.reply_text(f"Adding tip..")
+
+    try:
+      tip = 0
+      for arg in context.args:
+        if self.is_amount(arg):
+          tip = float(arg)
+          break
+      self.update_last_filled_row(16)
+      self.store_tip(tip=tip)
+    except Exception as e:
+      update.message.reply_text("Sorry I can't update sheet :c \nbecause: "+ str(e))
+      return
+
+    total = self.worksheet.acell(columns['total']).value
+
+    update.message.reply_text(f"Tip Added! {total} remaining...")

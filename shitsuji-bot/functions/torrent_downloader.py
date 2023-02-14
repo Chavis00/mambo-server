@@ -1,4 +1,5 @@
 from torrentp import TorrentDownloader
+from settings import TORRENT_PATH
 
 
 class Torrent_Downloader:
@@ -14,10 +15,9 @@ class Torrent_Downloader:
         magnet = ""
         for arg in context.args:
                 magnet = magnet + arg 
-        
         update.message.reply_text("Downloading...")
         try:
-            self.download_torrent(magnet, "/code/Films")
+            self.download_torrent(magnet, TORRENT_PATH)
             update.message.reply_text("Film was added to Plex!")
         except:
             update.message.reply_text("Something went wrong :c")
