@@ -141,7 +141,7 @@ class Gsheet_Helper:
 
     self.worksheet.update(f"{columns['tip_ammount']}{self.last_filled_row+1}",
                           tip)
-    self.worksheet.update(f"{columns['tip_date']}{self.last_filled_row+1}", datetime.now().strftime('%Y-%m-%d'))
+    self.worksheet.update(f"{columns['tip_date']}{self.last_filled_row+1}", datetime.now().strftime("%A"))
     # FORMAT
     self.worksheet.format(
       f"{columns['tip_ammount']}",
@@ -149,10 +149,7 @@ class Gsheet_Helper:
         'type': 'CURRENCY',
         'pattern': '$ #,###.00'
       }})
-    self.worksheet.format(f"{columns['tip_date']}",
-                          {'numberFormat': {
-                            "type": "DATE_TIME"
-                          }})
+
 
 
 
